@@ -9,31 +9,30 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
-//Aqui testamos a configuracao
-router.get('/test', function(req, res, next) {
-  sql.getdata();
-  res.render('index', { title: 'Express' });
-});
+// router.post('/login', (req, res) => {
+//   if(req.body.user === 'teste' && req.body.password === '12345'){
+//     return res.end();
+//   }
+//   res.status(401).end();
+// })
 
 
 // essa rota nos retorna caso passe na condicao dentro dela o status do usuario e o codigo digitado
-router.get("/getdata", function (req, res, next) {
-  //essa condicao valida a senha digitada
-  if((req.body.senha) == '12345'){
+router.get("/query", function (req, res, next) {
+  //essa condicao valida a senha digitada, devera sair assim que implementar o JWT
+  if((req.body.chave) == "12345"){
     sql.getdata_withQuery(req.body.codigo).then((result) => {
       res.json(result[0].map(p => {
-        return `STATUS: ${p.STATUS}`;
+        //apos recebido os dados via corpo de requisicao na funcao, eh criado um JSON para retornar mais abaixo as informacoes no endpoint
+        let jsonResult = {
+          "codigo" : p.CODIGO,
+          "status" : p.STATUS
+        }
+        //aqui eh o retorno da funcao que contem o JSON 
+        return jsonResult;
       }));
     });
   }
-  //caso a autenticacao falhe, sera retornado um array vazio
-  else{
-    res.send([]);
-  }
-
-
 });
-
 
 module.exports = router;

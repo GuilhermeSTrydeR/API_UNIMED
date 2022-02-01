@@ -10,7 +10,6 @@ console.log(" mathus-error :" + error);
   }
 }
  
-
 async function getdata_withQuery(codigo) {
     try {
       let pool = await sql.connect(config);
@@ -44,7 +43,6 @@ async function getdata_withQuery(codigo) {
     }
   }
   
-
 module.exports = {
   getdata: getdata,
   getdata_withQuery:getdata_withQuery
